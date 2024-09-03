@@ -10,7 +10,7 @@ export default function UploadPage() {
   };
   return (
     <div className="upload-page">
-      <h1>Hello To Drag & Drop Files</h1>
+      <h1>Upload Bank Statement</h1>
       <FileUploader
         multiple={false}
         handleChange={handleChange}
