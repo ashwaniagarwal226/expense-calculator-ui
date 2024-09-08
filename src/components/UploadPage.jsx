@@ -64,14 +64,16 @@ export default function UploadPage() {
       <p>{message ? `${file.name} ` + message : null}</p>
 
       {monthlyData.length > 0 && (
+        <div className="button-div">
+          <button className="button-54" onClick={handleViewChart}>View Monthly Spending Bar Chart</button>
         <div className="monthly-charts">
-          <button onClick={handleViewChart}>View Monthly Spending Bar Chart</button>
           {monthlyData.map((monthData, index) => (
             <div key={index} className="month-chart">
               <h2>{monthData.month} {monthData.year}</h2>
               <PieChartComponent monthData={monthData} />
             </div>
           ))}
+        </div>
         </div>
       )}
 
