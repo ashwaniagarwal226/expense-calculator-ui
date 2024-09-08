@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import axios from "axios";
 import PieChartComponent from "./PieChartComponent";
+import { useNavigate } from 'react-router-dom';
 
 const fileTypes = ["xls"];
 
@@ -9,6 +10,7 @@ export default function UploadPage() {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState(null);
   const [monthlyData, setMonthlyData] = useState([]);
+  const navigate = useNavigate(); 
 
   const uploadFileToServer = async (file) => {
     const formData = new FormData();
@@ -34,7 +36,6 @@ export default function UploadPage() {
     try {
       const response = await axios.get("http:///192.168.1.3:8081/api/expense/v1/hdfc/graphdata");
       setMonthlyData(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error calling API:", error);
     }
@@ -48,7 +49,9 @@ export default function UploadPage() {
     }
 
   };
-
+  const handleViewChart = () => {
+    navigate('/bar-chart', { state: { data: monthlyData } });
+  };
   return (
     <div className="upload-page">
       <h1>Upload Bank Statement</h1>
@@ -62,6 +65,7 @@ export default function UploadPage() {
 
       {monthlyData.length > 0 && (
         <div className="monthly-charts">
+          <button onClick={handleViewChart}>View Monthly Spending Bar Chart</button>
           {monthlyData.map((monthData, index) => (
             <div key={index} className="month-chart">
               <h2>{monthData.month} {monthData.year}</h2>
