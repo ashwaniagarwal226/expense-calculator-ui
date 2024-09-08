@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import axios from "axios";
+import PieChartComponent from "./PieChartComponent";
 
 const fileTypes = ["xls"];
 
@@ -48,19 +49,6 @@ export default function UploadPage() {
 
   };
 
-  const getPieChartData = (transSummary) => {
-    // Initialize chart data with headers for Google Charts
-    const chartData = [["Transaction Type", "Total Amount"]];
-    
-    // Loop through the transaction summary and push the data
-    transSummary.forEach((transaction) => {
-      if (transaction.totalAmount !== null) {
-        chartData.push([transaction.transactionType, transaction.totalAmount]);
-      }
-    });
-    
-    return chartData;
-  };
   return (
     <div className="upload-page">
       <h1>Upload Bank Statement</h1>
@@ -71,6 +59,18 @@ export default function UploadPage() {
         types={fileTypes}
       />
       <p>{message ? `${file.name} ` + message : null}</p>
+
+      {monthlyData.length > 0 && (
+        <div className="monthly-charts">
+          {monthlyData.map((monthData, index) => (
+            <div key={index} className="month-chart">
+              <h2>{monthData.month} {monthData.year}</h2>
+              <PieChartComponent monthData={monthData} />
+            </div>
+          ))}
+        </div>
+      )}
+
     </div>
     
   );

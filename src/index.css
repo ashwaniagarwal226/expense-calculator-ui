@@ -3,28 +3,29 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh; /* Ensures proper scaling */
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
+  padding: 20px; /* Adds some padding for mobile */
+  box-sizing: border-box;
 }
 
 h1 {
   color: #333;
 }
 
-.dropdown {
-  margin-bottom: 20px;
-}
-
-.dropdown-select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.month-chart {
+  margin-bottom: 40px; /* Adds space between each chart */
+  width: 100%; /* Full width for mobile */
+  max-width: 600px; /* Limits max width on larger screens */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .file-drop-area {
-  width: 300px;
+  width: 100%; /* Make it responsive */
+  max-width: 300px; /* Limit width on larger screens */
   height: 200px;
   border: 2px dashed #aaa;
   border-radius: 4px;
@@ -34,6 +35,7 @@ h1 {
   background-color: #fff;
   cursor: pointer;
   transition: border-color 0.3s;
+  margin-bottom: 20px; /* Adds space between file area and charts */
 }
 
 .file-drop-area:hover {
@@ -47,4 +49,22 @@ h1 {
 .file-drop-area p {
   text-align: center;
   color: #555;
+  padding: 0 10px; /* Adds padding for better readability */
+}
+
+.monthly-charts {
+  display: flex;
+  flex-wrap: wrap; /* Adjusts charts for different screen sizes */
+  justify-content: center;
+  gap: 20px; /* Adds space between charts */
+}
+
+@media (max-width: 768px) {
+  .month-chart {
+    max-width: 100%; /* Take full width on smaller screens */
+  }
+  
+  .file-drop-area {
+    max-width: 100%;
+  }
 }
