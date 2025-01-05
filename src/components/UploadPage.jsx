@@ -17,7 +17,7 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http:///192.168.1.3:8081/api/expense/v1/hdfc/transactionupload", formData, {
+      const response = await axios.post("http://192.168.29.205:8081/api/expense/v1/hdfc/transactionupload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -34,7 +34,7 @@ export default function UploadPage() {
 
   const getGraphData = async () => {
     try {
-      const response = await axios.get("http:///192.168.1.3:8081/api/expense/v1/hdfc/graphdata");
+      const response = await axios.get("http://192.168.29.205:8081/api/expense/v1/hdfc/graphdata");
       setMonthlyData(response.data);
     } catch (error) {
       console.error("Error calling API:", error);
@@ -66,11 +66,15 @@ export default function UploadPage() {
       {monthlyData.length > 0 && (
         <div className="button-div">
           <button className="button-54" onClick={handleViewChart}>View Monthly Spending Bar Chart</button>
-        <div className="monthly-charts">
+        <div >
           {monthlyData.map((monthData, index) => (
             <div key={index} className="month-chart">
-              <h2>{monthData.month} {monthData.year}</h2>
-              <PieChartComponent monthData={monthData} />
+              {monthData.totalSpent > 0 && (
+                <div className="monthly-charts"> 
+                  <h2>{monthData.month} {monthData.year}</h2>
+                  <PieChartComponent monthData={monthData} />
+                </div>
+              )}              
             </div>
           ))}
         </div>
