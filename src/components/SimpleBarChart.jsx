@@ -16,7 +16,12 @@ const SimpleBarChart = () => {
       <ResponsiveContainer width="100%" height={400}>
         <BarChart data={updatedData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
+          <XAxis dataKey="month" 
+          angle={-45} 
+            textAnchor="end" 
+            interval={0}   // show all labels
+            height={70}    // extra space for rotated labels
+          />
           <YAxis />
           <Tooltip />
           <Legend />
