@@ -52,6 +52,10 @@ export default function UploadPage() {
   const handleViewChart = () => {
     navigate('/bar-chart', { state: { data: monthlyData } });
   };
+  
+  const formatCurrency = (amount) =>{
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
+  }
 
   useEffect(() => {
     getGraphData();
@@ -77,7 +81,7 @@ export default function UploadPage() {
             <div key={index} className="month-chart">
               {monthData.totalSpent > 0 && (
                 <div className="monthly-charts"> 
-                  <h2>{monthData.month} {monthData.year} ({monthData.totalSpent})</h2>
+                  <h2>{monthData.month} {monthData.year} ({formatCurrency(monthData.totalSpent)})</h2>
                   <PieChartComponent monthData={monthData} />
                 </div>
               )}              
