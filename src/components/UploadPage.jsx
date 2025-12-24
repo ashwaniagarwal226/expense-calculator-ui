@@ -17,7 +17,7 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://192.168.68.100:8081/api/expense/v1/hdfc/transactionupload", formData, {
+      const response = await axios.post("http://localhost:8081/api/expense/v1/hdfc/transactionupload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -34,7 +34,7 @@ export default function UploadPage() {
 
   const getGraphData = async () => {
     try {
-      const response = await axios.get("http://192.168.68.100:8081/api/expense/v1/hdfc/graphdata");
+      const response = await axios.get("http://localhost:8081/api/expense/v1/hdfc/graphdata");
       setMonthlyData(response.data);
     } catch (error) {
       console.error("Error calling API:", error);
