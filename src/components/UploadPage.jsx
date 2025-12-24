@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import axios from "axios";
 import PieChartComponent from "./PieChartComponent";
+import MonthlyStats from "./MonthlyStats";
 import { useNavigate } from 'react-router-dom';
 
 const fileTypes = ["xls"];
@@ -17,7 +18,7 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost:8081/api/expense/v1/hdfc/transactionupload", formData, {
+      const response = await axios.post("http://192.168.68.111:8081/api/expense/v1/hdfc/transactionupload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -34,7 +35,7 @@ export default function UploadPage() {
 
   const getGraphData = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/api/expense/v1/hdfc/graphdata");
+      const response = await axios.get("http://192.168.68.111:8081/api/expense/v1/hdfc/graphdata");
       setMonthlyData(response.data);
     } catch (error) {
       console.error("Error calling API:", error);
@@ -53,10 +54,6 @@ export default function UploadPage() {
     navigate('/bar-chart', { state: { data: monthlyData } });
   };
   
-  const formatCurrency = (amount) =>{
-    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
-  }
-
   useEffect(() => {
     getGraphData();
   }, []);
@@ -75,18 +72,9 @@ export default function UploadPage() {
 
       {monthlyData.length > 0 && (
         <div className="button-div">
-          <button className="button-54" onClick={handleViewChart}>View Monthly Spending Bar Chart</button>
+          <button className="button-54" onClick={handleViewChart}>View Monthly Spend</button>
         <div >
-          {monthlyData.map((monthData, index) => (
-            <div key={index} className="month-chart">
-              {monthData.totalSpent > 0 && (
-                <div className="monthly-charts"> 
-                  <h2>{monthData.month} {monthData.year} ({formatCurrency(monthData.totalSpent)})</h2>
-                  <PieChartComponent monthData={monthData} />
-                </div>
-              )}              
-            </div>
-          ))}
+          <MonthlyStats monthlyData={monthlyData} />
         </div>
         </div>
       )}
