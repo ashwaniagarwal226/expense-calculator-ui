@@ -5,6 +5,8 @@ import UploadCard from "../components/UploadCard";
 import { CategoryBars, SplitMeter, TrendChart, WeekdayChart } from "../components/charts";
 import { useProfiles } from "../profile";
 
+const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+
 function Delta({ value, invert = false }) {
   if (value === null || value === undefined) return <span className="muted">no previous month</span>;
   const up = value > 0;
@@ -140,7 +142,7 @@ export default function Dashboard({ ai }) {
                             onSelect={(code) => setSelectedCat(code === selectedCat ? null : code)} />
               {categoryDrill && (
                 <div className="banner" style={{ marginTop: 8 }}>
-                  {categoryDrill.icon} <b>{categoryDrill.name}</b>: {money(categoryDrill.amount)} across {categoryDrill.count} payments
+                  {categoryDrill.icon} <b>{categoryDrill.name}</b>: {money(categoryDrill.amount)} across {plural(categoryDrill.count, "payment")}
                   {categoryDrill.previousAmount != null && <> (last month {money(categoryDrill.previousAmount)})</>}.{" "}
                   <button className="link" onClick={() => navigate(`/transactions?year=${m.year}&month=${m.month}&category=${categoryDrill.code}`)}>
                     See transactions →
@@ -170,8 +172,8 @@ export default function Dashboard({ ai }) {
                     <div className="name">{c.name}</div>
                     <div className="amount num">{money(c.amount)}</div>
                     <div className="delta">
-                      {c.changePct == null ? <span className="muted">{c.count} payments</span>
-                        : <span className={c.changePct > 0 ? "up" : "down"}>{c.changePct > 0 ? "▲" : "▼"} {pct(Math.abs(c.changePct))} · {c.count} payments</span>}
+                      {c.changePct == null ? <span className="muted">{plural(c.count, "payment")}</span>
+                        : <span className={c.changePct > 0 ? "up" : "down"}>{c.changePct > 0 ? "▲" : "▼"} {pct(Math.abs(c.changePct))} · {plural(c.count, "payment")}</span>}
                     </div>
                   </button>
                 </div>
