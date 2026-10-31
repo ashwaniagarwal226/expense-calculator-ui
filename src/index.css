@@ -1,113 +1,224 @@
-.upload-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh; /* Ensures proper scaling */
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  padding: 20px; /* Adds some padding for mobile */
-  box-sizing: border-box;
+/* ---------- tokens (light) ---------- */
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --surface-2: #f3f2ee;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.1);
+  --accent: #2a78d6;
+  --accent-wash: rgba(42, 120, 214, 0.1);
+  --series-1: #2a78d6;  /* expenses */
+  --series-2: #eb6834;  /* income */
+  --series-3: #1baf7a;  /* essential */
+  --series-4: #eda100;  /* discretionary */
+  --good: #006300;
+  --bad: #d03b3b;
+  --warn-bg: #fff6e0;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --radius: 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
-
-h1 {
-  color: #333;
-}
-
-.month-chart {
-  margin-bottom: 40px; /* Adds space between each chart */
-  width: 100%; /* Full width for mobile */
-  max-width: 600px; /* Limits max width on larger screens */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.file-drop-area {
-  width: 100%; /* Make it responsive */
-  max-width: 300px; /* Limit width on larger screens */
-  height: 200px;
-  border: 2px dashed #aaa;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fff;
-  cursor: pointer;
-  transition: border-color 0.3s;
-  margin-bottom: 20px; /* Adds space between file area and charts */
-}
-
-.file-drop-area:hover {
-  border-color: #777;
-}
-
-.file-input {
-  display: none;
-}
-
-.file-drop-area p {
-  text-align: center;
-  color: #555;
-  padding: 0 10px; /* Adds padding for better readability */
-}
-
-.monthly-charts {
-  display: flex;
-  flex-wrap: wrap; /* Adjusts charts for different screen sizes */
-  justify-content: center;
-  gap: 20px; /* Adds space between charts */
-}
-
-.button-div{
-  display: contents;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 768px) {
-  .month-chart {
-    max-width: 100%; /* Take full width on smaller screens */
-  }
-  
-  .file-drop-area {
-    max-width: 100%;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --surface-2: #232321;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #3987e5;
+    --accent-wash: rgba(57, 135, 229, 0.16);
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --good: #0ca30c;
+    --bad: #e66767;
+    --warn-bg: #2e2612;
+    --shadow: none;
   }
 }
-
-/* CSS */
-.button-54 {
-  background-color: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border matches cards */
-  border-radius: 24px;                   /* Matches card rounded corners */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Soft shadow */
-  color: #2c3e50;                        /* Dark text like titles */
-  cursor: pointer;
-  
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 1rem;
-  font-weight: 800;                      /* Bold text */
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  
-  padding: 18px 30px;
-  margin: 20px 0;
-  width: 100%;
-  max-width: 450px;                      /* Prevents it from getting too wide */
-  
-  transition: all 0.2s ease;             /* Smooth animation */
-  display: inline-block;
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --surface-2: #232321;
+  --ink: #ffffff;
+  --ink-2: #c3c2b7;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.1);
+  --accent: #3987e5;
+  --accent-wash: rgba(57, 135, 229, 0.16);
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --good: #0ca30c;
+  --bad: #e66767;
+  --warn-bg: #2e2612;
+  --shadow: none;
 }
 
-/* Hover Effect - Matches your Nav Buttons */
-.button-54:hover {
-  transform: translateY(-4px);           /* Lifts up */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Stronger shadow */
-  color: #1976D2;                        /* Blue accent on hover */
-  border-color: rgba(25, 118, 210, 0.1);
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font-size: 14px; line-height: 1.45; }
+h1, h2, h3 { margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: 1.6rem; }
+h2 { font-size: 1.05rem; font-weight: 650; }
+h3 { font-size: 0.95rem; font-weight: 600; }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.ink2 { color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+.up { color: var(--bad); }     /* spending up = bad */
+.down { color: var(--good); }  /* spending down = good */
+
+/* ---------- layout ---------- */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 10px max(16px, calc((100vw - 1200px) / 2));
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.brand-mark { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--accent); color: #fff; }
+.nav { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+.nav a { padding: 6px 12px; border-radius: 999px; color: var(--ink-2); text-decoration: none; font-weight: 500; }
+.nav a:hover { background: var(--surface-2); }
+.nav a.active { background: var(--accent-wash); color: var(--accent); }
+.ai-pill { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--ink-2); }
+.ai-pill.on span { color: var(--good); }
+
+.page { max-width: 1200px; margin: 0 auto; padding: 24px 16px 64px; display: flex; flex-direction: column; gap: 20px; }
+.page-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.grid-kpi { grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); }
+
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 18px 20px; min-width: 0;
+}
+.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.card.empty { text-align: center; padding: 48px 20px; }
+
+/* ---------- controls ---------- */
+button, select, input {
+  font: inherit; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px;
+}
+button { cursor: pointer; font-weight: 600; }
+button:hover:not(:disabled) { background: var(--surface-2); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button.primary { background: var(--accent); color: #fff; border-color: transparent; }
+button.primary:hover:not(:disabled) { filter: brightness(1.08); background: var(--accent); }
+button.ghost { background: transparent; }
+button.link { border: none; background: none; color: var(--accent); padding: 0; font-weight: 500; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+label.check { display: inline-flex; gap: 6px; align-items: center; color: var(--ink-2); }
+
+.banner { padding: 12px 14px; border-radius: 12px; background: var(--warn-bg); border: 1px solid var(--border); }
+.banner.error { background: color-mix(in srgb, var(--bad) 12%, var(--surface)); }
+.banner.ok { background: color-mix(in srgb, var(--good) 10%, var(--surface)); }
+
+/* ---------- upload ---------- */
+.upload { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.upload .dropzone { flex: 1; min-width: min(100%, 280px); }
+.upload .dropzone label { width: 100% !important; max-width: none !important; min-width: 0 !important; border-color: var(--axis) !important; }
+.upload-stats { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; color: var(--ink-2); }
+.upload-stats b { color: var(--ink); }
+
+/* ---------- month nav ---------- */
+.month-nav { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; }
+.month-nav .title { text-align: center; }
+.month-nav .title strong { display: block; font-size: 1.5rem; letter-spacing: -0.02em; }
+.month-nav .title span { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* ---------- KPI tiles ---------- */
+.kpi .label { color: var(--ink-2); font-size: 0.8rem; font-weight: 500; }
+.kpi .value { font-size: 1.55rem; font-weight: 700; margin-top: 4px; letter-spacing: -0.02em; }
+.kpi .sub { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+.kpi.hero { background: linear-gradient(135deg, var(--accent-wash), var(--surface) 60%); }
+
+/* ---------- meter ---------- */
+.meter { display: flex; height: 12px; border-radius: 6px; overflow: hidden; gap: 2px; background: var(--surface); }
+.meter > div { height: 100%; }
+.meter > div:first-child { border-radius: 6px 0 0 6px; }
+.meter > div:last-child { border-radius: 0 6px 6px 0; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; color: var(--ink-2); font-size: 0.85rem; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+/* ---------- category tiles ---------- */
+.tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); }
+.tile { background: var(--surface-2); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px; border: 1px solid transparent; }
+.tile button { all: unset; cursor: pointer; display: contents; }
+.tile:hover { border-color: var(--border); }
+.tile .top { display: flex; justify-content: space-between; align-items: center; }
+.tile .icon { font-size: 1.4rem; }
+.tile .share { font-size: 0.75rem; color: var(--ink-2); background: var(--surface); padding: 2px 8px; border-radius: 999px; }
+.tile .name { color: var(--ink-2); font-size: 0.85rem; }
+.tile .amount { font-size: 1.15rem; font-weight: 700; }
+.tile .delta { font-size: 0.75rem; }
+
+/* ---------- lists & tables ---------- */
+.list { list-style: none; margin: 0; padding: 0; }
+.list li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--grid); }
+.list li:last-child { border-bottom: none; }
+.list .main { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.list .side { text-align: right; white-space: nowrap; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+td.amount, th.amount { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td .narr { color: var(--muted); font-size: 0.8rem; max-width: 420px; overflow-wrap: anywhere; }
+.badge { font-size: 0.7rem; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--border); color: var(--ink-2); white-space: nowrap; }
+.badge.AI { color: var(--accent); border-color: var(--accent); }
+.badge.MANUAL { color: var(--good); border-color: var(--good); }
+.badge.NONE { color: var(--muted); }
+.pager { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+
+/* ---------- charts ---------- */
+.chart-tooltip { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; box-shadow: var(--shadow); font-size: 0.85rem; }
+.chart-tooltip .t { color: var(--muted); margin-bottom: 4px; }
+.chart-tooltip .row { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.chart-tooltip i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; }
+.recharts-cartesian-axis-tick-value { fill: var(--muted); font-size: 12px; }
+.recharts-cartesian-grid line { stroke: var(--grid); }
+.recharts-cartesian-axis-line { stroke: var(--axis); }
+.recharts-tooltip-cursor { fill: var(--accent-wash); }
+
+/* ---------- savings ---------- */
+.tip { display: flex; flex-direction: column; gap: 8px; }
+.tip .save { font-size: 1.3rem; font-weight: 700; color: var(--good); }
+.tip .bar { height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; display: flex; gap: 2px; }
+.tip .bar > div { height: 100%; }
+.diff { font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--grid); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 600px) {
+  .month-nav .title strong { font-size: 1.2rem; }
+  .kpi .value { font-size: 1.3rem; }
+  .ai-pill { display: none; }
 }
 
-.button-54:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
+/* ---------- profiles & notes ---------- */
+.profile-switch { font-weight: 600; border-radius: 999px; padding: 6px 12px; }
+.list.profiles li { align-items: center; flex-wrap: wrap; }
+button.danger { background: var(--bad); color: #fff; border-color: transparent; }
+.note { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 1px 7px; border-radius: 999px; background: var(--accent-wash); color: var(--accent); margin-left: 6px; vertical-align: 1px; }
+.person { font-size: 0.75rem; color: var(--ink-2); white-space: nowrap; }
